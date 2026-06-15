@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemeInstants - Premium Meme Soundboard</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Click to play your favorite meme sounds instantly! Create, upload, record, pitch-shift, and share custom sounds with MemeInstants soundboard.">
+    <meta name="keywords" content="meme soundboard, soundboard, myinstants clone, meme sounds, audio recorder, vine boom, download meme sounds">
+    
+    <!-- Favicon placeholder (will look beautiful with modern CSS styling, and we will place a nice SVG icon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23ff3b30%22 stroke=%22%23ffffff%22 stroke-width=%228%22/><circle cx=%2250%22 cy=%2245%22 r=%2235%22 fill=%22%23ff453a%22/></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind is NOT used as per guidelines, we will write customized Vanilla CSS in styles.css -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+    <!-- App Container -->
+    <div class="app-layout">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <div class="logo-button"></div>
+                    </div>
+                    <h1>MemeInstants</h1>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="search-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Search meme sounds..." autocomplete="off">
+                    <button id="search-clear-btn" class="search-clear-btn hidden" aria-label="Clear search">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button class="btn btn-primary" id="btn-add-sound">
+                    <svg viewBox="0 0 24 24" width="18" height="18" class="btn-icon">
+                        <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    <span>Create Sound</span>
+                </button>
+                
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+                    <!-- Sun Icon -->
+                    <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm-1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.5-.1 1 .3 1 .8s-.3.9-.8 1c-4.1.6-7.2 4.1-7.2 8.3 0 4.7 3.8 8.5 8.5 8.5 3.9 0 7.2-2.7 8-6.5.1-.5.6-.8 1.1-.7.5.1.8.6.7 1.1C21.8 19.1 17.4 22 12.3 22z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Categories horizontal bar -->
+        <nav class="categories-bar">
+            <button class="category-chip active" data-category="all">All</button>
+            <button class="category-chip" data-category="memes">🔥 Memes</button>
+            <button class="category-chip" data-category="gaming">🎮 Gaming</button>
+            <button class="category-chip" data-category="anime">🌸 Anime</button>
+            <button class="category-chip" data-category="reactions">🎭 Reactions</button>
+            <button class="category-chip" data-category="sfx">🔊 SFX</button>
+            <button class="category-chip" data-category="favorites">⭐ Favorites</button>
+            <button class="category-chip" data-category="custom">✨ Custom</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <!-- Grid Container -->
+            <div class="sound-grid" id="sound-grid">
+                <!-- Sound buttons will be dynamically generated here by script.js -->
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state hidden" id="empty-state">
+                <div class="empty-state-icon">🤷</div>
+                <h3>No sound buttons found</h3>
+                <p>Try refining your search or add your own custom sound!</p>
+                <button class="btn btn-secondary" id="empty-state-create-btn">Create Custom Sound</button>
+            </div>
+        </main>
+
+        <!-- Global Player / Controls bar (Sticky Bottom) -->
+        <footer class="player-controls-bar hidden" id="global-player-bar">
+            <div class="player-info">
+                <div class="playing-indicator">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                </div>
+                <div class="playing-meta">
+                    <span class="playing-title" id="player-title">Vine Boom</span>
+                    <span class="playing-category" id="player-category">Meme</span>
+                </div>
+            </div>
+            
+            <div class="player-audio-modifiers">
+                <!-- Volume Control -->
+                <div class="control-group">
+                    <label for="global-volume">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </label>
+                    <input type="range" id="global-volume" min="0" max="1" step="0.05" value="0.8">
+                    <span class="control-val" id="val-volume">80%</span>
+                </div>
+
+                <!-- Speed Control -->
+                <div class="control-group">
+                    <label for="global-speed">Speed</label>
+                    <input type="range" id="global-speed" min="0.5" max="2.0" step="0.1" value="1.0">
+                    <span class="control-val" id="val-speed">1.0x</span>
+                </div>
+
+                <!-- Pitch Control -->
+                <div class="control-group">
+                    <label for="global-pitch">Pitch</label>
+                    <input type="range" id="global-pitch" min="-12" max="12" step="1" value="0">
+                    <span class="control-val" id="val-pitch">0</span>
+                </div>
+                
+                <!-- Loop Control -->
+                <button class="player-btn" id="player-loop-btn" aria-label="Toggle loop">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="player-actions">
+                <button class="player-btn stop-btn" id="player-stop-btn" aria-label="Stop playing">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M6 6h12v12H6z"/>
+                    </svg>
+                </button>
+                <button class="btn btn-secondary btn-sm" id="player-download-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" class="btn-icon">
+                        <path fill="currentColor" d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+                    </svg>
+                    <span>Download</span>
+                </button>
+            </div>
+        </footer>
+
+        <!-- Modal: Sound Details -->
+        <div class="modal-backdrop hidden" id="modal-details">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <h2 id="detail-title">Sound Details</h2>
+                    <button class="modal-close" id="btn-close-details" aria-label="Close details">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-hero">
+                        <!-- Huge 3D Play Button -->
+                        <div class="detail-button-wrapper">
+                            <button class="detail-play-button" id="detail-big-button"></button>
+                            <span class="click-hint">Click Button to Play!</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-info-grid">
+                        <div class="info-row">
+                            <span class="info-label">Category</span>
+                            <span class="info-value category-tag" id="detail-category">Meme</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Favorites</span>
+                            <span class="info-value" id="detail-favorites-count">⭐ Favorited</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Direct Link</span>
+                            <div class="copy-link-wrapper">
+                                <input type="text" id="detail-link-input" readonly>
+                                <button class="btn btn-secondary btn-sm" id="btn-copy-link">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualizer inside modal -->
+                    <div class="waveform-container">
+                        <canvas id="detail-visualizer" width="400" height="80"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btn-modal-favorite">
+                        <span class="fav-icon">⭐</span>
+                        <span id="txt-modal-favorite">Favorite</span>
+                    </button>
+                    <button class="btn btn-primary" id="btn-modal-download">
+                        <svg viewBox="0 0 24 24" width="18" height="18" class="btn-icon">
+                            <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download MP3
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: Create/Upload Sound -->
+        <div class="modal-backdrop hidden" id="modal-create">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <h2>Create Custom Sound</h2>
+                    <button class="modal-close" id="btn-close-create" aria-label="Close creation modal">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-sound-form" onsubmit="return false;">
+                        
+                        <!-- Toggle Upload/Record -->
+                        <div class="tab-selectors">
+                            <button type="button" class="tab-btn active" id="tab-upload">📁 Upload File</button>
+                            <button type="button" class="tab-btn" id="tab-record">🎙️ Record Audio</button>
+                        </div>
+                        
+                        <!-- Upload Section -->
+                        <div class="creation-section" id="section-upload">
+                            <div class="drag-zone" id="drop-zone">
+                                <svg class="drag-icon" viewBox="0 0 24 24" width="48" height="48">
+                                    <path fill="currentColor" d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                                </svg>
+                                <p>Drag & drop your audio file here or click to browse</p>
+                                <span class="file-limits">Supports MP3, WAV, OGG (Max 5MB, up to 30s)</span>
+                                <input type="file" id="file-input" accept="audio/*" class="hidden">
+                            </div>
+                            <div class="selected-file-info hidden" id="file-info-container">
+                                <span class="file-name" id="file-name-text">filename.mp3</span>
+                                <button type="button" class="btn-clear-file" id="btn-clear-file">❌</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Record Section -->
+                        <div class="creation-section hidden" id="section-record">
+                            <div class="recorder-container">
+                                <button type="button" class="record-btn" id="btn-record-action">
+                                    <span class="record-icon"></span>
+                                </button>
+                                <span class="record-timer" id="record-timer">00:00</span>
+                                <span class="record-status" id="record-status">Click to start recording</span>
+                                
+                                <div class="mic-visualizer hidden" id="mic-visualizer-container">
+                                    <div class="mic-bar"></div>
+                                    <div class="mic-bar"></div>
+                                    <div class="mic-bar"></div>
+                                    <div class="mic-bar"></div>
+                                    <div class="mic-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Audio Preview (Hidden by default, shown when audio source exists) -->
+                        <div class="preview-container hidden" id="audio-preview-container">
+                            <span class="preview-label">Preview Sound:</span>
+                            <button type="button" class="btn btn-secondary btn-sm" id="btn-preview-play">▶️ Play</button>
+                        </div>
+                        
+                        <!-- Metadata Fields -->
+                        <div class="form-group">
+                            <label for="sound-name">Sound Name *</label>
+                            <input type="text" id="sound-name" placeholder="E.g., Coffin Dance, Goofy Ahh..." required max="30">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sound-category">Category *</label>
+                                <select id="sound-category" required>
+                                    <option value="memes">🔥 Memes</option>
+                                    <option value="gaming">🎮 Gaming</option>
+                                    <option value="anime">🌸 Anime</option>
+                                    <option value="reactions">🎭 Reactions</option>
+                                    <option value="sfx">🔊 SFX</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sound-color">Button Color</label>
+                                <div class="color-picker-grid">
+                                    <label class="color-opt color-red active"><input type="radio" name="btn-color" value="red" checked></label>
+                                    <label class="color-opt color-blue"><input type="radio" name="btn-color" value="blue"></label>
+                                    <label class="color-opt color-green"><input type="radio" name="btn-color" value="green"></label>
+                                    <label class="color-opt color-purple"><input type="radio" name="btn-color" value="purple"></label>
+                                    <label class="color-opt color-yellow"><input type="radio" name="btn-color" value="yellow"></label>
+                                    <label class="color-opt color-orange"><input type="radio" name="btn-color" value="orange"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-form-actions">
+                            <button type="button" class="btn btn-secondary" id="btn-cancel-create">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="btn-submit-sound" disabled>Add Sound Board Button</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notification hidden" id="toast">
+        <span class="toast-message" id="toast-msg">Copied!</span>
+    </div>
+
+    <!-- Core App Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
