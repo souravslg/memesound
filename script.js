@@ -1188,7 +1188,7 @@ document.querySelectorAll(".color-opt").forEach(opt => {
     });
 });
 
-btnAddSound.addEventListener("click", openCreateModal);
+if (btnAddSound) btnAddSound.addEventListener("click", openCreateModal);
 btnCloseCreate.addEventListener("click", closeCreateModal);
 btnCancelCreate.addEventListener("click", closeCreateModal);
 
